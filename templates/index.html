@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&family=Maven+Pro:wght@400..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #0a0a0a, #3a445a);
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Center vertically */
+        }
+        .container {
+            width: 60%; /* Full width */
+            height: 75%; /* Full height */
+            padding: 35px;
+            box-shadow: 10px 5px 30px rgba(246, 244, 244, 0.4);
+            border-radius: 10px;
+            overflow: auto; /* Scroll if content exceeds */
+            background-color: rgb(236, 228, 228);
+        }
+        h1 {
+            text-align: center;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background: linear-gradient(to right, rgb(3, 147, 5), rgb(135, 242, 135));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 30px; 
+            font-size: 4rem;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+            font-family: "Maven Pro", sans-serif;
+            font-size: 2rem;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px; /* Space below each input group */
+        }
+        .input-group > div {
+            flex: 1; /* Allow each input div to take equal space */
+            margin-right: 10px; /* Space between input fields */
+        }
+        .input-group > div:last-child {
+            margin-right: 0; /* Remove margin for the last item */
+        }
+        input[type="number"] {
+            width: 80%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            color: black; 
+            font-size: 2rem;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 2rem;
+            cursor: pointer;
+            font-family: "Exo", sans-serif;
+            margin-top: 40px; 
+        }
+        button:hover {
+            background-color: #12a317;
+            color: black;
+        }
+        .result-card {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(45deg, #0a0a0a, #3a445a);
+            color: white;
+            border-radius: 5px;
+            font-family: "Maven Pro", sans-serif;
+            font-size: 2.5rem;
+        }
+        .result-text {
+            margin-top: 15px;
+            font-size: 2.5rem;
+        }
+
+    </style>
+    
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Crop Recommendation System 🌱</h1>
+        </div>
+
+        <!-- Form to input data for prediction -->
+        <form action="/predict" method="POST">
+            <div class="input-group">
+                <div>
+                    <label for="Nitrogen">Nitrogen (N)</label>
+                    <input type="number" id="Nitrogen" name="Nitrogen" placeholder="Enter Nitrogen level" required>
+                </div>
+                <div>
+                    <label for="Phosporus">Phosphorus (P)</label>
+                    <input type="number" id="Phosporus" name="Phosporus" placeholder="Enter Phosphorus level" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div>
+                    <label for="Potassium">Potassium (K)</label>
+                    <input type="number" id="Potassium" name="Potassium" placeholder="Enter Potassium level" required>
+                </div>
+                <div>
+                    <label for="Temperature">Temperature (°C)</label>
+                    <input type="number" id="Temperature" name="Temperature" placeholder="Enter Temperature in °C" required step="0.01">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div>
+                    <label for="Humidity">Humidity (%)</label>
+                    <input type="number" id="Humidity" name="Humidity" placeholder="Enter Humidity in %" required step="0.01">
+                </div>
+                <div>
+                    <label for="Ph">pH Level</label>
+                    <input type="number" id="Ph" name="Ph" placeholder="Enter pH value" required step="0.01">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div>
+                    <label for="Rainfall">Rainfall (mm)</label>
+                    <input type="number" id="Rainfall" name="Rainfall" placeholder="Enter Rainfall in mm" required step="0.01">
+                </div>
+            </div>
+
+            <button type="submit">Get Recommendation</button>
+        </form>
+
+        <!-- Display result if available -->
+        {% if result %}
+        <div class="result-card">
+            <div class="result-text">
+                <h3>Recommended Crop:</h3>
+                <p>{{ result }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
